@@ -1,0 +1,13 @@
+<?php
+$_DATABASE = 
+
+    [
+       'HOSTNAME' => '',
+       'DBNAME'=> '',
+       'USER' => '',
+       'PWD'=> ''
+        
+    ]
+
+
+?>

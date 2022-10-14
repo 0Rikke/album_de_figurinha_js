@@ -3,8 +3,7 @@ const div = document.createElement('div');
 const figuras = geraFigura(10);
 
 const album = () =>{
-    
-    //requisição asincrona
+    //requisição asincrona quando tiver banco de dados
     if(divAlbum.hasChildNodes()){
         divAlbum.innerHTML = ''
     }else{    
@@ -17,16 +16,17 @@ const album = () =>{
                 Idade: ${figura.idade}
                 `;
             // img.setAttribute('src', `${figura.img}.png`);
-                div1.setAttribute('class','figura')
+                div1.setAttribute('class','figura');
+                div1.setAttribute('value',true)
                 div1.append(img);       
                 div1.append(p);
                 divAlbum.append(div1);
             });
         }  
+        hideShoWBarra();
 }
 
 const buy = ()=>{
-
     const buyDiv = document.getElementById('buy');
     const pacote = document.createElement('div');
     pacote.setAttribute('class','pacote')
@@ -38,6 +38,10 @@ const buy = ()=>{
     })
     buyDiv.append(pacote)   
 }
+
+
+
+
 
 
 
@@ -59,7 +63,6 @@ function geraStringAleatoria(tamanho) {
 function geraFigura(tam){
     const r = [];
     for(var i =0; i < tam; i++){
-    
         r.push({
             nome: geraStringAleatoria(10),
             idade:geraStringAleatoria(2),
@@ -70,7 +73,6 @@ function geraFigura(tam){
 }
 
 function abrirPacote(){
-
     const sorteadas = document.getElementById('abertos')
     const figurasSorteadas = geraFigura(5);
     figurasSorteadas.forEach(sorteada=>{
@@ -82,10 +84,50 @@ function abrirPacote(){
                 Nome: ${sorteada.nome}, 
                 Idade: ${sorteada.idade}
                 `;
-        div1.setAttribute('class','figura')
+        div1.setAttribute('class','figura-aberta')
         div1.append(img);       
         div1.append(p);
         sorteadas.append(div1);
     })
-
 }
+
+function divBollean(){
+    const filhos = document.querySelectorAll('.figura')
+    var contador = 0;
+    var total = filhos.length
+
+    filhos.forEach(filho=>{
+        if(filho.getAttribute('value') == 'true'){
+            contador ++
+        }
+    })
+    return [contador, total];   
+}
+    
+function msg(){
+    //elaborar mais
+    const user = 'henrique';
+    return `Parabéns ${user} você comletou o álbum!`;
+}
+
+    
+let varControle = true;
+
+function hideShoWBarra(){
+    const preenche = document.getElementById('preenchimento')
+    varControle = !varControle;
+    const [contador,total] = divBollean();
+    var calculoPorcentagem = contador/total*100
+
+    if(varControle === true){
+        preenche.style.width = `${calculoPorcentagem}%`
+    if(calculoPorcentagem == 100){
+        window.alert(msg()); 
+    }
+    }else{
+        preenche.style.width = `0%`
+    }
+}
+
+//console.log(hideShoWBarra())
+console.log(divBollean())
